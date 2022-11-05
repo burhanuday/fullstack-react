@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "node server",
+    "serve": "NODE_ENV=production node server",
     "build": "pnpm run build:client && pnpm run build:server",
     "build:client": "vite build --outDir dist/client",
     "build:server": "vite build --outDir dist/server --ssr src/entry-server.jsx"
