@@ -72,28 +72,22 @@ async function createServer(
         //    required, and provides efficient invalidation similar to HMR.
         render = (await vite.ssrLoadModule("/src/entry-server.jsx")).render;
       } else {
-        template = fs.readFileSync(resolve("dist/client/index.html"), "utf-8");
+        // template = fs.readFileSync(resolve("dist/client/index.html"), "utf-8");
         render = (await import("./dist/server/entry-server.js")).render;
       }
 
-      const context = {};
+      // const context = {};
 
       // 4. render the app HTML. This assumes entry-server.js's exported `render`
       //    function calls appropriate framework SSR APIs,
       //    e.g. ReactDOMServer.renderToString()
       // const appHtml = render(url, res);
-      render(url, res);
+      render({ url, res, head: template.match(/<head>(.+?)<\/head>/s)[1] });
 
-      if (context.url) {
-        // Somewhere a `<Redirect>` was rendered
-        return res.redirect(301, context.url);
-      }
-
-      // 5. Inject the app-rendered HTML into the template.
-      // const html = template.replace(`<!--ssr-outlet-->`, appHtml);
-
-      // 6. Send the rendered HTML back.
-      // res.status(200).set({ "Content-Type": "text/html" }).end(html);
+      // if (context.url) {
+      //   // Somewhere a `<Redirect>` was rendered
+      //   return res.redirect(301, context.url);
+      // }
     } catch (e) {
       // If an error is caught, let Vite fix the stack trace so it maps back to
       // your actual source code.

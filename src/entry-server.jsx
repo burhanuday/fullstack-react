@@ -24,15 +24,15 @@ const routes = Object.keys(ROUTES).map((route) => {
 //   return { ...preserved, [key]: PRESERVED[file].default };
 // }, {});
 
-const router = createMemoryRouter(
-  routes.map(({ path, component: Component }) => ({
-    path: path,
-    element: <Component />,
-  })),
-  { initialEntries: ["/", "/about"] }
-);
+export function render({ url, res, head }) {
+  const router = createMemoryRouter(
+    routes.map(({ path, component: Component }) => ({
+      path: path,
+      element: <Component />,
+    })),
+    { initialEntries: [url] }
+  );
 
-export function render(url, res) {
   res.socket.on("error", (error) => {
     console.error("Fatal", error);
   });
@@ -40,7 +40,7 @@ export function render(url, res) {
   // const data = createServerData();
 
   const stream = ReactDOMServer.renderToPipeableStream(
-    <App>
+    <App head={head}>
       <Suspense>
         <RouterProvider router={router} />
       </Suspense>

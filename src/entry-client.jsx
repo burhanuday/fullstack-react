@@ -32,7 +32,7 @@ const router = createBrowserRouter(
 );
 
 ReactDOM.hydrateRoot(
-  document.getElementById("app"),
+  document,
   <App>
     <Suspense>
       <RouterProvider router={router} />

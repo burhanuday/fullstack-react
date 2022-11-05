@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export const loader = () => {
   return {
     foo: "bar",
@@ -5,13 +7,16 @@ export const loader = () => {
 };
 
 const Page = () => {
+  const [counter, setCounter] = useState(0);
+
   const handleClick = () => {
-    console.log("clicekd");
+    setCounter((counter) => counter + 1);
   };
 
   return (
     <div>
       <h1>I am server rendered /about page </h1>
+      <p>Counter: {counter}</p>
       <button onClick={handleClick}>Button</button>
     </div>
   );

@@ -1,10 +1,8 @@
 import React from "react";
+import Html from "./components/Html";
 
-const App = ({ children }) => {
-  // const _App = preserved?.["_app"] || Fragment;
-  // const _NotFound = preserved?.["404"] || Fragment;
-
-  return <div>Hi there</div>;
+const App = ({ children, head }) => {
+  return <Html head={head}>{children}</Html>;
 };
 
 export default App;
